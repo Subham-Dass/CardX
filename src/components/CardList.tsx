@@ -27,7 +27,7 @@ const CardList = () => {
 
     // Fallback thumbnail if not provided
     if (!newProduct.thumbnail) {
-      newProduct.thumbnail = "src/assets/no-image.png";
+      newProduct.thumbnail = "src/assets/no_image.png";
     }
 
     addProduct(newProduct)
