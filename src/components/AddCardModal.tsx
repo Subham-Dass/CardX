@@ -8,23 +8,27 @@ import {
 } from "@headlessui/react";
 import { Fragment } from "react";
 import { useForm } from "react-hook-form";
+import type { Product } from "../api/productApi";
 
-const AddProductModal = ({ isOpen, onClose, onAdd, dataLength }) => {
+type AddProductModalProps = {
+  isOpen: boolean;
+  onClose: () => void;
+  onAdd: (product: Product) => void;
+  dataLength: number;
+};
+
+const AddProductModal = ({ isOpen, onClose, onAdd, dataLength } :AddProductModalProps) => {
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm<Product>();
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: Product) => {
     const newProduct = {
       ...data,
-      id: dataLength + 100,
-      thumbnail:
-        data.thumbnail?.length > 0
-          ? data.thumbnail
-          : "https://via.placeholder.com/300x200?text=No+Image",
+      id: dataLength + 1,
     };
     onAdd(newProduct);
     reset();

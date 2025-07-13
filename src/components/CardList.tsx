@@ -1,66 +1,52 @@
 import { useState, useEffect } from "react";
 import Card from "./Card";
-import { getProducts, deleteProduct, addProduct } from "../api/productApi.js";
+import { getProducts, deleteProduct, addProduct } from "../api/productApi.ts";
 import DeleteCardModal from "./DeleteCardModal.jsx";
 import AddCardModal from "./AddCardModal.jsx";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import toast from "react-hot-toast";
+import { type Product } from "../api/productApi.ts";
 
 const CardList = () => {
-  const [productData, setProductData] = useState([]);
+  const [productData, setProductData] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [productToDelete, setProductToDelete] = useState(null);
+  const [productToDelete, setProductToDelete] = useState<number | null>(null);
 
   const [isAddModalOpen, setAddModalOpen] = useState(false);
 
   useEffect(() => {
-    getProducts().then((data) => {
+    getProducts().then((data: Product[]) => {
       setProductData(data);
       setIsLoading(false);
     });
   }, []);
 
-  // const addProduct = (newProduct) => {
-  //   setProductData((prev) => [newProduct, ...prev]);
-  //   toast.success("Product added successfully!");
-  // };
+  const addRecord = (newProduct: Product) => {
+    toast.loading("Adding product...");
 
-  // const deleteRecord = () => {
-  //   deleteProduct(productToDelete).then(() => {
-  //     setProductData((prev) => prev.filter((p) => p.id !== productToDelete));
-  //     setDeleteModalOpen(false);
-  //     setProductToDelete(null);
-  //     toast.success("Product deleted successfully!");
-  //   });
-  // };
+    // Fallback thumbnail if not provided
+    if (!newProduct.thumbnail) {
+      newProduct.thumbnail = "src/assets/no-image.png";
+    }
 
-  const addRecord = (newProduct) => {
-  toast.loading("Adding product...");
-
-  // Fallback thumbnail if not provided
-  if (!newProduct.thumbnail) {
-    newProduct.thumbnail = "src/assets/no-image.png";
-  }
-
-  addProduct(newProduct)
-    .then((createdProduct) => {
-      if (createdProduct) {
-        setProductData((prev) => [createdProduct, ...prev]);
+    addProduct(newProduct)
+      .then((createdProduct: Product) => {
+        if (createdProduct) {
+          setProductData((prev) => [newProduct, ...prev]);
+          toast.dismiss();
+          toast.success("Product added successfully!");
+        } else {
+          toast.dismiss();
+          toast.error("Failed to add product.");
+        }
+      })
+      .catch((err: Error) => {
+        console.error("Add failed:", err);
         toast.dismiss();
-        toast.success("Product added successfully!");
-      } else {
-        toast.dismiss();
-        toast.error("Failed to add product.");
-      }
-    })
-    .catch((err) => {
-      console.error("Add failed:", err);
-      toast.dismiss();
-      toast.error("Something went wrong.");
-    });
-};
-
+        toast.error("Something went wrong.");
+      });
+  };
 
   const deleteRecord = () => {
     toast.loading("Deleting product...");
@@ -73,14 +59,14 @@ const CardList = () => {
         toast.dismiss();
         toast.success("Product deleted successfully!");
       })
-      .catch((err) => {
+      .catch((err: Error) => {
         console.error("Delete failed:", err);
         toast.dismiss();
         toast.error("Failed to delete product.");
       });
   };
 
-  const openDeleteModal = (id) => {
+  const openDeleteModal = (id: number) => {
     setProductToDelete(id);
     setDeleteModalOpen(true);
   };

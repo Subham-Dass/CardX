@@ -4,7 +4,13 @@ import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/re
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 
 
- const DeleteCardModal = ({isOpen, onClose, onConfirm}) => {
+type DeleteCardModalProps = {
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+};
+
+const DeleteCardModal = ({ isOpen, onClose, onConfirm }: DeleteCardModalProps) => {
 
   return (
     <div>

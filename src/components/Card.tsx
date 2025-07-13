@@ -1,5 +1,6 @@
 import { useInView } from "react-intersection-observer";
 import { motion } from "framer-motion";
+import { type Product } from "../api/productApi";
 
 const variants = {
   hidden: { opacity: 0 },
@@ -7,7 +8,12 @@ const variants = {
   exit: { opacity: 0, scale: 0.95, transition: { duration: 0.2 } },
 };
 
-const Card = ({ cardData, onDelete }) => {
+type CardProps = {
+  cardData: Product;
+  onDelete: (id: Product["id"]) => void;
+};
+
+const Card = ({ cardData, onDelete } : CardProps) => {
   const { ref, inView } = useInView({
     triggerOnce: false,
     threshold: 0.15,
