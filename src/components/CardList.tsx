@@ -74,19 +74,25 @@ const CardList = () => {
   return (
     <>
       {isLoading ? (
-        <div className="flex justify-center items-center min-h-[50vh]">
-          <div className="w-10 h-10 border-4 border-indigo-700 border-t-transparent rounded-full animate-spin"></div>
+      <div className="flex justify-center items-center min-h-[50vh]">
+        <div className="w-10 h-10 border-4 border-indigo-700 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    ) : (
+      <div className="wrapper">
+        <div className="flex justify-end px-4 mb-6">
+          <button
+            className="bg-indigo-600 text-white px-5 py-2 rounded-lg font-medium hover:bg-indigo-700 transition-shadow shadow-md hover:shadow-lg cursor-pointer"
+            onClick={() => setAddModalOpen(true)}
+          >
+            + Add Product
+          </button>
         </div>
-      ) : (
-        <div className="wrapper">
-          <div className="flex justify-end px-4 mb-6">
-            <button
-              className="bg-indigo-600 text-white px-5 py-2 rounded-lg font-medium hover:bg-indigo-700 transition-shadow shadow-md hover:shadow-lg cursor-pointer"
-              onClick={() => setAddModalOpen(true)}
-            >
-              + Add Product
-            </button>
+
+        {productData.length === 0 ? (
+          <div className="flex flex-col items-center justify-center min-h-[40vh] text-center">
+            <img src="/no_data.png" alt="No data" className="w-60 h-auto mb-4 opacity-80" />
           </div>
+        ) : (
           <div className="cards grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
             <AnimatePresence>
               {productData.map((product) => (
@@ -98,21 +104,22 @@ const CardList = () => {
               ))}
             </AnimatePresence>
           </div>
-        </div>
-      )}
+        )}
+      </div>
+    )}
 
-      <DeleteCardModal
-        isOpen={isDeleteModalOpen}
-        onClose={() => setDeleteModalOpen(false)}
-        onConfirm={deleteRecord}
-      />
+    <DeleteCardModal
+      isOpen={isDeleteModalOpen}
+      onClose={() => setDeleteModalOpen(false)}
+      onConfirm={deleteRecord}
+    />
 
-      <AddCardModal
-        isOpen={isAddModalOpen}
-        onClose={() => setAddModalOpen(false)}
-        onAdd={addRecord}
-        dataLength={productData.length}
-      />
+    <AddCardModal
+      isOpen={isAddModalOpen}
+      onClose={() => setAddModalOpen(false)}
+      onAdd={addRecord}
+      dataLength={productData.length}
+    />
     </>
   );
 };
