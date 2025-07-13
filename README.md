@@ -1,8 +1,12 @@
 # 🛒 Product Catalog - React CRUD App
 
-This is a simple responsive product catalog web app built with **React**, **Vite**, **TailwindCSS**, and **React Hook Form**. It supports basic **CRUD operations** (Create, Read, and Delete) using **dummyJSON API** and showcases features like lazy loading, modals with animations, form validation, and toast notifications.
+This is a simple responsive product catalog web app built with **React**, **Vite**, **TailwindCSS**, and **React Hook Form**. It supports basic **CRUD operations** (Create, Read, and Delete) using **dummyJSON API** and showcases features like lazy loading, modals with animations, form validation, and toast notifications.  
+
+
+🔗 **Live Demo**: [https://cardx-999.netlify.app/](https://cardx-999.netlify.app/)
 
 ---
+
 
 ## ✨ Features
 
@@ -19,8 +23,6 @@ This is a simple responsive product catalog web app built with **React**, **Vite
 ---
 
 ## 🖼️ Screenshots
-
-> Add your screenshots below
 
 - 📸 **Home Page:**  
   _![Home Page](./public/HomePage.png)
